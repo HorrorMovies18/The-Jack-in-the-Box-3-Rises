@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horror Movies - The Jack in the Box 3: Rises</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+        body {
+            background-color: #0d0d0d;
+            color: #e6e6e6;
+            font-family: 'Courier New', Courier, monospace;
+            transition: all 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .logo {
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 2s;
+        }
+        .logo img {
+            width: 150px;
+            height: auto;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+        .logo img:hover {
+            transform: rotate(360deg) scale(1.2);
+            box-shadow: 0 0 30px red;
+        }
+        .poster, .info, .description, .players {
+            margin: 30px auto;
+            width: 80%;
+            max-width: 800px;
+            transition: all 0.3s;
+            animation: fadeIn 2s;
+        }
+        .poster {
+            text-align: center;
+        }
+        .poster img {
+            width: 50%;
+            height: auto;
+            max-height: 600px;
+            border: 5px solid #8B0000;
+            box-shadow: 0 0 20px #8B0000;
+            transition: transform 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+        .poster img:hover {
+            transform: perspective(800px) rotateY(15deg) scale(1.05);
+        }
+        .new-badge {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background-color: orange;
+            border: 3px solid #B50202;
+            border-radius: 5px;
+            color: #181817;
+            padding: 5px 10px;
+            font-family: 'Nosifer', cursive;
+            transform: rotate(0deg);
+            animation: bounce 1s infinite alternate;
+            box-shadow: 0 0 20px #FFB400;
+            
+        }
+        .info, .description {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #8B0000;
+            box-shadow: 0 0 10px #8B0000;
+            font-family: 'Nosifer', cursive;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .info:hover, .description:hover {
+            transform: perspective(800px) rotateY(15deg);
+        }
+        .info::before, .description::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #8B0000;
+            animation: drip 2s infinite;
+        }
+        .players button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #444;
+            color: #fff;
+            border: 2px solid #8B0000;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s, border 0.3s;
+            box-shadow: 0 0 10px #8B0000;
+        }
+        .players button:hover {
+            background-color: #8B0000;
+            border: 2px solid #444;
+            transform: rotateY(360deg);
+            box-shadow: 0 0 20px #8B0000;
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+        .video-container {
+            margin-top: 10px;
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+        .video-container iframe {
+            width: 100%;
+            max-width: 560px;
+            height: auto;
+            aspect-ratio: 16/9;
+            border: 5px solid #8B0000;
+            box-shadow: 0 0 20px #8B0000;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'Nosifer', cursive;
+            color: #8B0000;
+            animation: fadeIn 2s;
+        }
+        .footer a {
+            color: #8B0000;
+            text-decoration: none;
+            position: relative;
+        }
+        .footer a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #8B0000;
+            animation: drip 2s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes drip {
+            0% { height: 0; }
+            50% { height: 5px; }
+            100% { height: 0; }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.key == "F12" || (event.ctrlKey && event.shiftKey && event.key == "I")) {
+                event.preventDefault();
+            }
+        });
+        function changeVideo(url) {
+            var iframe = document.getElementById('video-player');
+            iframe.src = url;
+        }
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="https://i.imgur.com/iYZcdxp.png" alt="Logo du site">
+    </div>
+    <div class="poster">
+        <img src="https://th.bing.com/th/id/OIP.OZm1-WOqhx2Ht2SDZLhURQAAAA?rs=1&pid=ImgDetMain" alt="Affiche du film">
+        
+    </div>
+    <div class="description">
+        <p>The Jack in the Box 3: Rises (2024)</p>
+    </div>
+    <div class="info">
+        <p>Genre: Films, Epouvante-horreur</p>
+        <p>Durée: 1h 32min</p>
+        <p>Date de sortie : 2024</p>
+        <p>Réalisé par: Lawrence Fowler</p>
+        <p>Acteurs: Nicholas Anscombe, Isabella Colby Browne, Lisa Antrobus</p>
+        <p>Évaluation: 6,9 / 10</p>
+    </div>
+    <div class="description">
+        <p>Lorsqu'un mystérieux Jack in the Box est découvert et ouvert dans l'enceinte d'une école pour filles, six courageuses étudiantes vont devoir se battre jusqu'au bout contre le démon qui s'est libéré...</p>
+    </div>
+    <div class="video-container">
+        <iframe id="video-player" src="https://cinestreams.xyz/movies/The-Jack-in-the-Box-Rises.mp4" scrolling="NO" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+    </div>
+    <div class="players">
+        <button onclick="changeVideo('https://cinestreams.xyz/movies/The-Jack-in-the-Box-Rises.mp4')">Lecteur VIP</button>
+        <button onclick="changeVideo('https://voe.sx/e/vrfvi7eh8lvm')">Lecteur 2</button>
+        <button onclick="changeVideo('https://dood.li/e/laj7iqdkcyx9')">Lecteur 3</button>
+        <button onclick="changeVideo('https://filemoon.sx/e/6rugv4p3pawo')">Lecteur 4</button>
+        <button onclick="changeVideo('https://uqload.ws/embed-c49r1fwjlxpp.html')">Lecteur 5</button>
+        <button onclick="changeVideo('https://www.youtube.com/embed/9ceUt3pXPOI?si=L2dc3WVrcvZTyRyP')">Bande-annonce</button>
+    </div>
+    <div class="footer">
+        <p>By <a href="https://www.tiktok.com/@shadow_ff18?_t=8qqOHJXZykr&_r=1">SHADOW</a></p>
+    </div>
+</body>
+</html>
